@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import EventCard from "../components/EventCard";
-
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const headers = {
-  apikey: import.meta.env.VITE_SUPABASE_APIKEY,
-  "Content-Type": "application/json",
-};
+import { getEvents } from "../services/supabaseClient";
 
 export default function HomePage() {
   const [events, setEvents] = useState([]);
@@ -14,15 +9,12 @@ export default function HomePage() {
   const [category, setCategory] = useState("Alle");
 
   useEffect(() => {
-    async function getEvents() {
-      const response = await fetch(`${SUPABASE_URL}/events?order=date.asc`, {
-        headers,
-      });
-      const data = await response.json();
+    async function loadEvents() {
+      const data = await getEvents();
       setEvents(data);
     }
 
-    getEvents();
+    loadEvents();
   }, []);
 
   const categories = [
