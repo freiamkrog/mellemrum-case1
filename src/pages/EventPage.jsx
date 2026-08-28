@@ -8,11 +8,23 @@ export default function EventPage() {
   const [event, setEvent] = useState(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     async function loadEvent() {
-      const data = await getEvent(eventId);
-      setEvent(data);
+      try {
+        setLoading(true);
+        setError("");
+
+        const data = await getEvent(eventId);
+        setEvent(data);
+      } catch (error) {
+        console.error(error);
+        setError("Vi kunne ikke hente dette event. Prøv igen senere.");
+      } finally {
+        setLoading(false);
+      }
     }
 
     loadEvent();
@@ -23,8 +35,47 @@ export default function EventPage() {
     console.log({ name, email, event: event.title });
   }
 
+  if (loading) {
+    return (
+      <>
+        <main className="event-page">
+          <p className="message" role="status">
+            Henter event...
+          </p>
+        </main>
+        <Footer />
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <main className="event-page">
+          <p className="message" role="alert">
+            {error}
+          </p>
+          <Link className="back-link" to="/">
+            ← Alle events
+          </Link>
+        </main>
+        <Footer />
+      </>
+    );
+  }
+
   if (!event) {
-    return null;
+    return (
+      <>
+        <main className="event-page">
+          <p className="message">Vi kunne ikke finde dette event.</p>
+          <Link className="back-link" to="/">
+            ← Alle events
+          </Link>
+        </main>
+        <Footer />
+      </>
+    );
   }
 
   const date = new Date(event.date);
