@@ -7,11 +7,23 @@ export default function HomePage() {
   const [events, setEvents] = useState([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Alle");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     async function loadEvents() {
-      const data = await getEvents();
-      setEvents(data);
+      try {
+        setLoading(true);
+        setError("");
+
+        const data = await getEvents();
+        setEvents(data);
+      } catch (error) {
+        console.error(error);
+        setError("Vi kunne ikke hente events. Prøv igen senere.");
+      } finally {
+        setLoading(false);
+      }
     }
 
     loadEvents();
@@ -77,11 +89,31 @@ export default function HomePage() {
           </label>
         </section>
 
-        <section className="event-grid">
-          {filteredEvents.map((event) => (
-            <EventCard key={event.id} event={event} />
-          ))}
-        </section>
+        {loading && (
+          <p className="message" role="status">
+            Henter kommende events...
+          </p>
+        )}
+
+        {error && (
+          <p className="message" role="alert">
+            {error}
+          </p>
+        )}
+
+        {!loading && !error && filteredEvents.length === 0 && (
+          <p className="message">
+            Vi fandt ingen events, der matcher din søgning.
+          </p>
+        )}
+
+        {!loading && !error && filteredEvents.length > 0 && (
+          <section className="event-grid">
+            {filteredEvents.map((event) => (
+              <EventCard key={event.id} event={event} />
+            ))}
+          </section>
+        )}
       </main>
       <Footer />
     </>
