@@ -35,3 +35,32 @@ export async function getRegistrations() {
 
   return data;
 }
+
+export async function createRegistration(registration) {
+  const existingResponse = await fetch(
+    `${SUPABASE_URL}/registrations?email=eq.${encodeURIComponent(
+      registration.email,
+    )}&eventTitle=eq.${encodeURIComponent(registration.eventTitle)}`,
+    {
+      headers,
+    },
+  );
+
+  const existingRegistrations = await existingResponse.json();
+
+  if (existingRegistrations.length > 0) {
+    throw new Error("Denne mail er allerede tilmeldt dette event.");
+  }
+
+  const response = await fetch(`${SUPABASE_URL}/registrations`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(registration),
+  });
+
+  if (!response.ok) {
+    throw new Error("Kunne ikke oprette tilmelding.");
+  }
+
+  return true;
+}
