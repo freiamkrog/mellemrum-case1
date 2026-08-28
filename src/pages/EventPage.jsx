@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import Footer from "../components/Footer";
-import { getEvent } from "../services/supabaseClient";
+import { createRegistration, getEvent } from "../services/supabaseClient";
 
 export default function EventPage() {
   const { eventId } = useParams();
@@ -10,6 +10,9 @@ export default function EventPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const [registrationError, setRegistrationError] = useState("");
 
   useEffect(() => {
     async function loadEvent() {
@@ -32,7 +35,32 @@ export default function EventPage() {
 
   async function handleSubmit(eventSubmit) {
     eventSubmit.preventDefault();
-    console.log({ name, email, event: event.title });
+
+    try {
+      setSubmitting(true);
+      setRegistrationSuccess(false);
+      setRegistrationError("");
+
+      const registration = {
+        name,
+        email,
+        eventTitle: event.title,
+        eventDate: event.date,
+        eventLocation: event.venueName,
+        status: "Ny",
+      };
+
+      await createRegistration(registration);
+
+      setRegistrationSuccess(true);
+      setName("");
+      setEmail("");
+    } catch (error) {
+      console.error(error);
+      setRegistrationError(error.message);
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (loading) {
@@ -89,22 +117,34 @@ export default function EventPage() {
 
         <section className="event-detail">
           <img src={event.image} alt="" />
+
           <div className="event-detail-content">
             <p className="event-category">{event.category}</p>
             <h1>{event.title}</h1>
             <p className="lead">{event.summary}</p>
+
             <div className="detail-list">
               <p>
                 <strong>Dato</strong>
-                {date.toLocaleDateString("da-DK", { weekday: "long", day: "numeric", month: "long" })} kl.{" "}
-                {date.toLocaleTimeString("da-DK", { hour: "2-digit", minute: "2-digit" })}
+                {date.toLocaleDateString("da-DK", {
+                  weekday: "long",
+                  day: "numeric",
+                  month: "long",
+                })}{" "}
+                kl.{" "}
+                {date.toLocaleTimeString("da-DK", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
               </p>
+
               <p>
                 <strong>Sted</strong>
                 <span>
                   {event.venueName}
                   <br />
-                  {event.venueAddress}, {event.venuePostalCode} {event.venueCity}
+                  {event.venueAddress}, {event.venuePostalCode}{" "}
+                  {event.venueCity}
                   {event.venueWebsite && (
                     <>
                       <br />
@@ -113,11 +153,13 @@ export default function EventPage() {
                   )}
                 </span>
               </p>
+
               <p>
                 <strong>Pris</strong>
                 {event.price === 0 ? "Gratis" : `${event.price} kr.`}
               </p>
             </div>
+
             <p>{event.description}</p>
           </div>
         </section>
@@ -126,24 +168,51 @@ export default function EventPage() {
           <div>
             <p className="eyebrow dark">Tilmelding</p>
             <h2>Reserver din plads</h2>
-            <p>Udfyld formularen, så sender vi din tilmelding til arrangøren.</p>
+            <p>
+              Udfyld formularen, så sender vi din tilmelding til arrangøren.
+            </p>
           </div>
+
+          {registrationSuccess && (
+            <p className="message" role="status">
+              Du er nu tilmeldt eventet.
+            </p>
+          )}
+
+          {registrationError && (
+            <p className="message" role="alert">
+              {registrationError}
+            </p>
+          )}
 
           <form onSubmit={handleSubmit}>
             <label>
               Navn
-              <input value={name} onChange={(inputEvent) => setName(inputEvent.target.value)} />
+              <input
+                value={name}
+                onChange={(inputEvent) => setName(inputEvent.target.value)}
+                required
+              />
             </label>
-            <span>E-mail</span>
-            <input
-              value={email}
-              onChange={(inputEvent) => setEmail(inputEvent.target.value)}
-              placeholder="dig@example.com"
-            />
-            <button type="submit">Tilmeld mig</button>
+
+            <label>
+              E-mail
+              <input
+                type="email"
+                value={email}
+                onChange={(inputEvent) => setEmail(inputEvent.target.value)}
+                placeholder="dig@example.com"
+                required
+              />
+            </label>
+
+            <button type="submit" disabled={submitting}>
+              {submitting ? "Tilmelder..." : "Tilmeld mig"}
+            </button>
           </form>
         </section>
       </main>
+
       <Footer />
     </>
   );
