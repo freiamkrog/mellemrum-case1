@@ -655,11 +655,43 @@ select:focus {
 }
 
 .registration-list {
-  background: white;
+  background: transparent;
+  overflow: visible;
+}
+
+.registration-group {
   border: 1px solid var(--line);
   border-radius: 14px;
-  box-shadow: 0 8px 26px rgba(23, 32, 29, 0.05);
+  margin-bottom: 2rem;
   overflow: hidden;
+}
+
+.registration-group:last-child {
+  margin-bottom: 0;
+}
+
+.registration-group-header {
+  align-items: center;
+  background: var(--green);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem 1.2rem;
+}
+
+.registration-group-header h2 {
+  font-size: 1.5rem;
+  letter-spacing: -0.035em;
+  margin: 0;
+}
+
+.registration-group-header p {
+  color: var(--lime);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-transform: uppercase;
 }
 
 .registration-row {
@@ -694,13 +726,20 @@ select:focus {
 }
 
 .status {
-  background: #dff3cc;
   border-radius: 999px;
   display: inline-block;
   font-size: 0.75rem;
   font-weight: 750;
   padding: 0.35rem 0.6rem;
   text-align: center;
+}
+
+.status-pending {
+  background: #f4df9b;
+}
+
+.status-confirmed {
+  background: #dff3cc;
 }
 
 .not-found-title {
