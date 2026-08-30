@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
 import Footer from "../components/Footer";
 import { getRegistrations } from "../services/supabaseClient";
 
@@ -29,6 +28,23 @@ export default function RegistrationsPage() {
     loadRegistrations();
   }, []);
 
+  const registrationsByEvent = registrations.reduce((groups, registration) => {
+    const eventTitle = registration.eventTitle;
+
+    if (!groups[eventTitle]) {
+      groups[eventTitle] = [];
+    }
+
+    groups[eventTitle].push(registration);
+
+    return groups;
+  }, {});
+
+  const statusLabels = {
+    Ny: "Afventer bekræftelse",
+    Bekræftet: "Bekræftet",
+  };
+
   return (
     <>
       <header className="admin-header">
@@ -36,14 +52,9 @@ export default function RegistrationsPage() {
         <h1>Tilmeldinger</h1>
         <p>{registrationCount} tilmeldinger i alt</p>
       </header>
+
       <main>
         <div className="registration-list">
-          <div className="registration-row registration-labels">
-            <span>Navn</span>
-            <span>Event</span>
-            <span>Dato</span>
-            <span>Status</span>
-          </div>
           {loading && (
             <p className="message" role="status">
               Henter tilmeldinger...
@@ -62,22 +73,53 @@ export default function RegistrationsPage() {
 
           {!loading &&
             !error &&
-            registrations.length > 0 &&
-            registrations.map((registration) => (
-              <div className="registration-row" key={registration.id}>
-                <div>
-                  <strong>{registration.name}</strong>
-                  <small>{registration.email}</small>
-                </div>
-                <span>{registration.eventTitle}</span>
-                <span>
-                  {new Date(registration.eventDate).toLocaleDateString("da-DK")}
-                </span>
-                <span className="status">{registration.status}</span>
-              </div>
-            ))}
+            Object.entries(registrationsByEvent).map(
+              ([eventTitle, eventRegistrations]) => (
+                <section className="registration-group" key={eventTitle}>
+                  <div className="registration-group-header">
+                    <h2>{eventTitle}</h2>
+                    <p>{eventRegistrations.length} tilmeldinger</p>
+                  </div>
+
+                  <div className="registration-row registration-labels">
+                    <span>Navn</span>
+                    <span>E-mail</span>
+                    <span>Dato</span>
+                    <span>Status</span>
+                  </div>
+
+                  {eventRegistrations.map((registration) => (
+                    <div className="registration-row" key={registration.id}>
+                      <div>
+                        <strong>{registration.name}</strong>
+                      </div>
+
+                      <span>{registration.email}</span>
+
+                      <span>
+                        {new Date(registration.eventDate).toLocaleDateString(
+                          "da-DK",
+                        )}
+                      </span>
+
+                      <span
+                        className={`status ${
+                          registration.status === "Ny"
+                            ? "status-pending"
+                            : "status-confirmed"
+                        }`}
+                      >
+                        {statusLabels[registration.status] ||
+                          registration.status}
+                      </span>
+                    </div>
+                  ))}
+                </section>
+              ),
+            )}
         </div>
       </main>
+
       <Footer />
     </>
   );
