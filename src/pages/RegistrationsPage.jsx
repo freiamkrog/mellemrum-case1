@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import { getRegistrations } from "../services/supabaseClient";
+import styles from "./RegistrationsPage.module.css";
 
 export default function RegistrationsPage() {
   const [registrations, setRegistrations] = useState([]);
@@ -47,14 +48,14 @@ export default function RegistrationsPage() {
 
   return (
     <>
-      <header className="admin-header">
+      <header className={styles.adminHeader}>
         <p className="eyebrow">Internt overblik</p>
         <h1>Tilmeldinger</h1>
         <p>{registrationCount} tilmeldinger i alt</p>
       </header>
 
       <main>
-        <div className="registration-list">
+        <div className={styles.registrationList}>
           {loading && (
             <p className="message" role="status">
               Henter tilmeldinger...
@@ -75,13 +76,15 @@ export default function RegistrationsPage() {
             !error &&
             Object.entries(registrationsByEvent).map(
               ([eventTitle, eventRegistrations]) => (
-                <section className="registration-group" key={eventTitle}>
-                  <div className="registration-group-header">
+                <section className={styles.registrationGroup} key={eventTitle}>
+                  <div className={styles.registrationGroupHeader}>
                     <h2>{eventTitle}</h2>
                     <p>{eventRegistrations.length} tilmeldinger</p>
                   </div>
 
-                  <div className="registration-row registration-labels">
+                  <div
+                    className={`${styles.registrationRow} ${styles.registrationLabels}`}
+                  >
                     <span>Navn</span>
                     <span>E-mail</span>
                     <span>Dato</span>
@@ -89,7 +92,10 @@ export default function RegistrationsPage() {
                   </div>
 
                   {eventRegistrations.map((registration) => (
-                    <div className="registration-row" key={registration.id}>
+                    <div
+                      className={styles.registrationRow}
+                      key={registration.id}
+                    >
                       <div>
                         <strong>{registration.name}</strong>
                       </div>
@@ -103,10 +109,10 @@ export default function RegistrationsPage() {
                       </span>
 
                       <span
-                        className={`status ${
+                        className={`${styles.status} ${
                           registration.status === "Ny"
-                            ? "status-pending"
-                            : "status-confirmed"
+                            ? styles.statusPending
+                            : styles.statusConfirmed
                         }`}
                       >
                         {statusLabels[registration.status] ||

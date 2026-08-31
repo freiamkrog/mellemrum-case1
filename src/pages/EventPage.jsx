@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import Footer from "../components/Footer";
 import { createRegistration, getEvent } from "../services/supabaseClient";
+import styles from "./EventPage.module.css";
 
 export default function EventPage() {
   const { eventId } = useParams();
@@ -66,7 +67,7 @@ export default function EventPage() {
   if (loading) {
     return (
       <>
-        <main className="event-page">
+        <main className={styles.eventPage}>
           <p className="message" role="status">
             Henter event...
           </p>
@@ -79,14 +80,16 @@ export default function EventPage() {
   if (error) {
     return (
       <>
-        <main className="event-page">
+        <main className={styles.eventPage}>
           <p className="message" role="alert">
             {error}
           </p>
-          <Link className="back-link" to="/">
+
+          <Link className={styles.backLink} to="/">
             ← Alle events
           </Link>
         </main>
+
         <Footer />
       </>
     );
@@ -95,12 +98,14 @@ export default function EventPage() {
   if (!event) {
     return (
       <>
-        <main className="event-page">
+        <main className={styles.eventPage}>
           <p className="message">Vi kunne ikke finde dette event.</p>
-          <Link className="back-link" to="/">
+
+          <Link className={styles.backLink} to="/">
             ← Alle events
           </Link>
         </main>
+
         <Footer />
       </>
     );
@@ -110,20 +115,22 @@ export default function EventPage() {
 
   return (
     <>
-      <main className="event-page">
-        <Link className="back-link" to="/">
+      <main className={styles.eventPage}>
+        <Link className={styles.backLink} to="/">
           ← Alle events
         </Link>
 
-        <section className="event-detail">
+        <section className={styles.eventDetail}>
           <img src={event.image} alt="" />
 
-          <div className="event-detail-content">
-            <p className="event-category">{event.category}</p>
+          <div className={styles.eventDetailContent}>
+            <p className={styles.eventCategory}>{event.category}</p>
+
             <h1>{event.title}</h1>
+
             <p className="lead">{event.summary}</p>
 
-            <div className="detail-list">
+            <div className={styles.detailList}>
               <p>
                 <strong>Dato</strong>
                 {date.toLocaleDateString("da-DK", {
@@ -164,10 +171,12 @@ export default function EventPage() {
           </div>
         </section>
 
-        <section className="signup-panel">
+        <section className={styles.signupPanel}>
           <div>
             <p className="eyebrow dark">Tilmelding</p>
+
             <h2>Reserver din plads</h2>
+
             <p>
               Udfyld formularen, så sender vi din tilmelding til arrangøren.
             </p>

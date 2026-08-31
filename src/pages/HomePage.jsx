@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import EventCard from "../components/EventCard";
 import { getEvents } from "../services/supabaseClient";
+import styles from "./HomePage.module.css";
 
 export default function HomePage() {
   const [events, setEvents] = useState([]);
@@ -45,20 +46,20 @@ export default function HomePage() {
 
   return (
     <>
-      <header className="hero">
+      <header className={styles.hero}>
         <p className="eyebrow">Kultur i Aarhus</p>
         <h1>Find plads til noget nyt.</h1>
-        <p className="hero-copy">
+        <p className={styles.heroCopy}>
           Koncerter, talks og workshops samlet ét sted. Find dit næste event, og
           tilmeld dig på få minutter.
         </p>
-        <a className="hero-link" href="#events">
+        <a className={styles.heroLink} href="#events">
           Se kommende events ↓
         </a>
       </header>
 
       <main id="events">
-        <section className="section-heading">
+        <section className={styles.sectionHeading}>
           <div>
             <p className="eyebrow dark">Det sker</p>
             <h2>Kommende events</h2>
@@ -66,7 +67,7 @@ export default function HomePage() {
           <p>Kuraterede oplevelser i byen – fra små scener til store idéer.</p>
         </section>
 
-        <section className="filters">
+        <section className={styles.filters}>
           <label>
             Søg
             <input
@@ -76,6 +77,7 @@ export default function HomePage() {
               placeholder="Søg efter titel eller sted"
             />
           </label>
+
           <label>
             Kategori
             <select
@@ -108,13 +110,14 @@ export default function HomePage() {
         )}
 
         {!loading && !error && filteredEvents.length > 0 && (
-          <section className="event-grid">
+          <section className={styles.eventGrid}>
             {filteredEvents.map((event) => (
               <EventCard key={event.id} event={event} />
             ))}
           </section>
         )}
       </main>
+
       <Footer />
     </>
   );
