@@ -6,7 +6,7 @@
 
 .adminHeader h1 {
   font-size: clamp(3rem, 7vw, 6.5rem);
-  letter-spacing: -0.065em;
+  letter-spacing: normal;
   line-height: 0.95;
   margin: 0;
 }
@@ -38,7 +38,7 @@
 
 .registrationGroupHeader h2 {
   font-size: 1.5rem;
-  letter-spacing: -0.035em;
+  letter-spacing: normal;
   margin: 0;
 }
 
@@ -46,7 +46,7 @@
   color: var(--lime);
   font-size: 0.78rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: normal;
   margin: 0;
   text-transform: uppercase;
 }
@@ -79,7 +79,7 @@
   background: var(--cream);
   font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: normal;
   text-transform: uppercase;
 }
 
