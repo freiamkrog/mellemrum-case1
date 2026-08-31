@@ -24,7 +24,7 @@
   color: white;
   font-size: clamp(2rem, 4vw, 3.6rem);
   font-weight: 850;
-  letter-spacing: -0.06em;
+  letter-spacing: normal;
   line-height: 1;
 }
 
@@ -36,7 +36,7 @@
   color: var(--lime);
   font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: normal;
   margin-bottom: 0.75rem !important;
   text-transform: uppercase;
 }

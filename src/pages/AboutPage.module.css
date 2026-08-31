@@ -34,14 +34,14 @@
 
 .aboutPage h2 {
   font-size: clamp(2.6rem, 5vw, 5rem);
-  letter-spacing: -0.06em;
+  letter-spacing: normal;
   line-height: 0.95;
   margin: 0;
 }
 
 .aboutPage h3 {
   font-size: clamp(1.8rem, 3vw, 3rem);
-  letter-spacing: -0.045em;
+  letter-spacing: normal;
   line-height: 1;
   margin: 0;
 }
@@ -107,7 +107,7 @@
 .aboutFlowList span {
   font-size: 0.75rem;
   font-weight: 850;
-  letter-spacing: 0.12em;
+  letter-spacing: normal;
   text-transform: uppercase;
 }
 
@@ -179,7 +179,7 @@
 .aboutFlowList strong {
   display: block;
   font-size: clamp(1.4rem, 2.5vw, 2rem);
-  letter-spacing: -0.035em;
+  letter-spacing: normal;
   line-height: 1.1;
 }
 
@@ -217,7 +217,7 @@
   font-size: 0.78rem;
   font-weight: 800;
   left: 0;
-  letter-spacing: 0.08em;
+  letter-spacing: normal;
   padding: 0.8rem 1rem;
   position: absolute;
   text-transform: uppercase;
