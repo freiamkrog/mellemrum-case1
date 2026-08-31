@@ -57,7 +57,7 @@ export default function AboutPage() {
                 Find lokale oplevelser, få det vigtigste overblik, og tilmeld
                 dig uden unødige omveje.
               </p>
-              <Link to="/">Udforsk kommende events →</Link>
+              <a href="/#events">Udforsk kommende events →</a>
             </article>
 
             <article>
@@ -122,9 +122,9 @@ export default function AboutPage() {
               — fra små scener til store tanker.
             </p>
 
-            <Link className={styles.aboutCta} to="/">
+            <a className={styles.aboutCta} href="/#events">
               Se kommende events →
-            </Link>
+            </a>
           </div>
         </section>
       </main>
