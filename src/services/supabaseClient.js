@@ -7,7 +7,7 @@ const headers = {
 
 export async function getEvents() {
   const response = await fetch(
-    `${SUPABASE_URL}/events?select=*,venues(*)&order=date.asc`,
+    `${SUPABASE_URL}/events?select=*,venues(*),registrations(count)&order=date.asc`,
     {
       headers,
     },
@@ -24,7 +24,7 @@ export async function getEvents() {
 
 export async function getEvent(eventId) {
   const response = await fetch(
-    `${SUPABASE_URL}/events?id=eq.${eventId}&select=*,venues!events_venue_id_fkey(*)`,
+    `${SUPABASE_URL}/events?id=eq.${eventId}&select=*,venues!events_venue_id_fkey(*),registrations(count)`,
     {
       headers,
     },
@@ -41,7 +41,7 @@ export async function getEvent(eventId) {
 
 export async function getRegistrations() {
   const response = await fetch(
-    `${SUPABASE_URL}/registrations?select=*,events(*)&order=createdAt.desc`,
+    `${SUPABASE_URL}/registrations?select=*,events(*,registrations(count))&order=createdAt.desc`,
     {
       headers,
     },

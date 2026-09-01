@@ -56,6 +56,15 @@ export default function EventPage() {
 
       await createRegistration(registration);
 
+      setEvent((currentEvent) => ({
+        ...currentEvent,
+        registrations: [
+          {
+            count: (currentEvent.registrations?.[0]?.count || 0) + 1,
+          },
+        ],
+      }));
+
       setRegistrationSuccess(true);
       setName("");
       setEmail("");
@@ -120,6 +129,19 @@ export default function EventPage() {
   const date = new Date(event.date);
   const venue = event.venues;
 
+  const registrationCount = event.registrations?.[0]?.count || 0;
+  const remainingSeats = event.capacity - registrationCount;
+
+  let availability = "God plads";
+
+  if (remainingSeats <= 0) {
+    availability = "Udsolgt";
+  } else if (remainingSeats <= event.capacity / 4) {
+    availability = "Få pladser";
+  }
+
+  const isSoldOut = remainingSeats <= 0;
+
   return (
     <>
       <main className={styles.eventPage}>
@@ -136,6 +158,24 @@ export default function EventPage() {
             <h1>{event.title}</h1>
 
             <p className={styles.lead}>{event.summary}</p>
+
+            <div className={styles.availability}>
+              <strong>
+                {registrationCount} / {event.capacity} tilmeldte
+              </strong>
+
+              <span
+                className={
+                  availability === "Udsolgt"
+                    ? styles.soldOut
+                    : availability === "Få pladser"
+                      ? styles.fewSeats
+                      : styles.goodAvailability
+                }
+              >
+                {availability}
+              </span>
+            </div>
 
             <div className={styles.detailList}>
               <p>
@@ -198,48 +238,62 @@ export default function EventPage() {
           </div>
 
           <div className={styles.signupFormArea}>
-            {registrationSuccess && (
-              <div className={styles.successMessage} role="status">
-                <strong>Tilmeldingen er gennemført</strong>
+            {isSoldOut ? (
+              <div className={styles.registrationError} role="status">
+                <strong>Eventet er udsolgt</strong>
 
-                <p>Du er nu tilmeldt eventet.</p>
+                <p>Der er ikke flere ledige pladser.</p>
               </div>
+            ) : (
+              <>
+                {registrationSuccess && (
+                  <div className={styles.successMessage} role="status">
+                    <strong>Tilmeldingen er gennemført</strong>
+
+                    <p>Du er nu tilmeldt eventet.</p>
+                  </div>
+                )}
+
+                {registrationError && (
+                  <div className={styles.registrationError} role="alert">
+                    <strong>Der opstod en fejl</strong>
+
+                    <p>{registrationError}</p>
+                  </div>
+                )}
+
+                <form onSubmit={handleSubmit}>
+                  <label>
+                    Navn
+                    <input
+                      type="text"
+                      value={name}
+                      onChange={(inputEvent) =>
+                        setName(inputEvent.target.value)
+                      }
+                      required
+                    />
+                  </label>
+
+                  <label>
+                    E-mail
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(inputEvent) =>
+                        setEmail(inputEvent.target.value)
+                      }
+                      placeholder="dig@example.com"
+                      required
+                    />
+                  </label>
+
+                  <button type="submit" disabled={submitting}>
+                    {submitting ? "Tilmelder..." : "Tilmeld mig →"}
+                  </button>
+                </form>
+              </>
             )}
-
-            {registrationError && (
-              <div className={styles.registrationError} role="alert">
-                <strong>Der opstod en fejl</strong>
-
-                <p>{registrationError}</p>
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit}>
-              <label>
-                Navn
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(inputEvent) => setName(inputEvent.target.value)}
-                  required
-                />
-              </label>
-
-              <label>
-                E-mail
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(inputEvent) => setEmail(inputEvent.target.value)}
-                  placeholder="dig@example.com"
-                  required
-                />
-              </label>
-
-              <button type="submit" disabled={submitting}>
-                {submitting ? "Tilmelder..." : "Tilmeld mig →"}
-              </button>
-            </form>
           </div>
         </section>
       </main>
