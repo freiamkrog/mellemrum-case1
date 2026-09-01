@@ -52,6 +52,11 @@
   line-height: 1.7;
 }
 
+.lead {
+  color: var(--ink) !important;
+  font-size: clamp(1.25rem, 2vw, 1.7rem) !important;
+}
+
 .aboutIntro {
   display: grid;
   gap: clamp(3rem, 7vw, 7rem);
