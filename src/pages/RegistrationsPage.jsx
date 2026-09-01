@@ -30,7 +30,7 @@ export default function RegistrationsPage() {
   }, []);
 
   const registrationsByEvent = registrations.reduce((groups, registration) => {
-    const eventTitle = registration.eventTitle;
+    const eventTitle = registration.events?.title || "Ukendt event";
 
     if (!groups[eventTitle]) {
       groups[eventTitle] = [];
@@ -103,9 +103,11 @@ export default function RegistrationsPage() {
                       <span>{registration.email}</span>
 
                       <span>
-                        {new Date(registration.eventDate).toLocaleDateString(
-                          "da-DK",
-                        )}
+                        {registration.events?.date
+                          ? new Date(
+                              registration.events.date,
+                            ).toLocaleDateString("da-DK")
+                          : "—"}
                       </span>
 
                       <span

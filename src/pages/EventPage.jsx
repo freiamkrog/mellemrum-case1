@@ -45,9 +45,7 @@ export default function EventPage() {
       const registration = {
         name,
         email,
-        eventTitle: event.title,
-        eventDate: event.date,
-        eventLocation: event.venueName,
+        event_id: event.id,
         status: "Ny",
       };
 
@@ -112,6 +110,7 @@ export default function EventPage() {
   }
 
   const date = new Date(event.date);
+  const venue = event.venues;
 
   return (
     <>
@@ -148,14 +147,15 @@ export default function EventPage() {
               <p>
                 <strong>Sted</strong>
                 <span>
-                  {event.venueName}
+                  {venue?.name}
                   <br />
-                  {event.venueAddress}, {event.venuePostalCode}{" "}
-                  {event.venueCity}
-                  {event.venueWebsite && (
+                  {venue?.address}, {venue?.postalCode} {venue?.city}
+                  {venue?.website && (
                     <>
                       <br />
-                      <a href={event.venueWebsite}>Besøg venue</a>
+                      <a href={venue.website} target="_blank" rel="noreferrer">
+                        Besøg venue
+                      </a>
                     </>
                   )}
                 </span>
