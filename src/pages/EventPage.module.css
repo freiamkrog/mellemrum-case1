@@ -26,43 +26,6 @@
   transform: translateY(-2px);
 }
 
-/* =========================
-   LOADING / ERROR / EMPTY
-========================= */
-
-.loadingState,
-.errorState,
-.emptyState {
-  border-radius: 20px;
-  padding: 2rem 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-}
-
-.loadingState strong,
-.errorState strong,
-.emptyState strong {
-  display: block;
-  color: var(--green);
-  font-size: 1.1rem;
-  margin-bottom: 0.35rem;
-}
-
-.loadingState p,
-.errorState p,
-.emptyState p {
-  margin: 0;
-  color: #52605a;
-}
-
-/* Empty */
-
-.emptyState {
-  background: #eee9df;
-}
-
 .errorBackLink {
   background: var(--green);
   border-radius: 999px;
@@ -333,14 +296,6 @@
 }
 
 @media (max-width: 600px) {
-  .loadingState,
-  .errorState,
-  .emptyState {
-    align-items: flex-start;
-    flex-direction: column;
-    padding: 1.5rem;
-  }
-
   .detailList p {
     grid-template-columns: 1fr;
     gap: 0.3rem;

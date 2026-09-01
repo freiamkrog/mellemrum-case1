@@ -67,7 +67,6 @@ export default function EventPage() {
     }
   }
 
-  /* Loading state */
   if (loading) {
     return (
       <>
@@ -80,7 +79,6 @@ export default function EventPage() {
     );
   }
 
-  /* Error state */
   if (error) {
     return (
       <>
@@ -98,7 +96,6 @@ export default function EventPage() {
     );
   }
 
-  /* Empty state */
   if (!event) {
     return (
       <>
@@ -201,7 +198,6 @@ export default function EventPage() {
           </div>
 
           <div className={styles.signupFormArea}>
-            {/* Success */}
             {registrationSuccess && (
               <div className={styles.successMessage} role="status">
                 <strong>Tilmeldingen er gennemført</strong>
@@ -210,7 +206,6 @@ export default function EventPage() {
               </div>
             )}
 
-            {/* Error */}
             {registrationError && (
               <div className={styles.registrationError} role="alert">
                 <strong>Der opstod en fejl</strong>

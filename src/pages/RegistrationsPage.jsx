@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
+import ErrorState from "../components/ErrorState";
+import EmptyState from "../components/EmptyState";
+import LoadingState from "../components/LoadingState";
 import { getRegistrations } from "../services/supabaseClient";
 import styles from "./RegistrationsPage.module.css";
 
@@ -56,20 +59,20 @@ export default function RegistrationsPage() {
 
       <main>
         <div className={styles.registrationList}>
-          {loading && (
-            <p className="message" role="status">
-              Henter tilmeldinger...
-            </p>
-          )}
+          {loading && <LoadingState message="Henter tilmeldinger..." />}
 
           {error && (
-            <p className="message" role="alert">
-              {error}
-            </p>
+            <ErrorState
+              title="Tilmeldinger kunne ikke hentes"
+              message={error}
+            />
           )}
 
           {!loading && !error && registrations.length === 0 && (
-            <p className="message">Der er endnu ingen tilmeldinger.</p>
+            <EmptyState
+              title="Ingen tilmeldinger endnu"
+              message="Der er endnu ingen tilmeldinger."
+            />
           )}
 
           {!loading &&

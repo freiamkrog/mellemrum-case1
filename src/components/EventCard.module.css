@@ -3,10 +3,12 @@
   border: 1px solid var(--line);
   border-radius: 14px;
   box-shadow: 0 8px 26px rgba(23, 32, 29, 0.05);
+  color: inherit;
   display: flex;
   flex-direction: column;
   min-height: 100%;
   overflow: hidden;
+  text-decoration: none;
   transition: box-shadow 180ms ease, transform 180ms ease;
 }
 
@@ -72,7 +74,7 @@
   transition: background 160ms ease, color 160ms ease;
 }
 
-.cardLink:hover {
+.eventCard:hover .cardLink {
   background: var(--lime);
   color: var(--green);
 }

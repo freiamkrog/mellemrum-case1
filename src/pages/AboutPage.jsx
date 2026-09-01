@@ -1,11 +1,10 @@
-import { Link } from "react-router";
 import Footer from "../components/Footer";
 import styles from "./AboutPage.module.css";
 
 export default function AboutPage() {
   return (
     <>
-      <header className={`page-header ${styles.aboutHeader}`}>
+      <header className={`${styles.pageHeader} ${styles.aboutHeader}`}>
         <div className={styles.aboutHeaderContent}>
           <p className="eyebrow">Om Mellemrum</p>
           <h1>Vi skaber mellemrum i kalenderen.</h1>
