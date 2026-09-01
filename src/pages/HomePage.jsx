@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
+import ErrorState from "../components/ErrorState";
+import EmptyState from "../components/EmptyState";
 import EventCard from "../components/EventCard";
 import { getEvents } from "../services/supabaseClient";
 import styles from "./HomePage.module.css";
@@ -14,9 +16,6 @@ export default function HomePage() {
   useEffect(() => {
     async function loadEvents() {
       try {
-        setLoading(true);
-        setError("");
-
         const data = await getEvents();
         setEvents(data);
       } catch (error) {
@@ -30,15 +29,34 @@ export default function HomePage() {
     loadEvents();
   }, []);
 
+  async function handleRetry() {
+    try {
+      setLoading(true);
+      setError("");
+
+      const data = await getEvents();
+      setEvents(data);
+    } catch (error) {
+      console.error(error);
+      setError("Vi kunne ikke hente events. Prøv igen senere.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   const categories = [
     "Alle",
     ...new Set(events.map((event) => event.category)),
   ];
 
   const filteredEvents = events.filter((event) => {
+    const venueName = event.venues?.name || "";
+
     const searchText =
-      `${event.title} ${event.summary} ${event.venueName}`.toLowerCase();
+      `${event.title} ${event.summary} ${venueName}`.toLowerCase();
+
     const matchesSearch = searchText.includes(search.toLowerCase());
+
     const matchesCategory = category === "Alle" || event.category === category;
 
     return matchesSearch && matchesCategory;
@@ -48,11 +66,14 @@ export default function HomePage() {
     <>
       <header className={styles.hero}>
         <p className="eyebrow">Kultur i Aarhus</p>
+
         <h1>Find plads til noget nyt.</h1>
+
         <p className={styles.heroCopy}>
           Koncerter, talks og workshops samlet ét sted. Find dit næste event, og
           tilmeld dig på få minutter.
         </p>
+
         <a className={styles.heroLink} href="#events">
           Se kommende events ↓
         </a>
@@ -64,6 +85,7 @@ export default function HomePage() {
             <p className="eyebrow dark">Det sker</p>
             <h2>Kommende events</h2>
           </div>
+
           <p>Kuraterede oplevelser i byen – fra små scener til store idéer.</p>
         </section>
 
@@ -97,17 +119,31 @@ export default function HomePage() {
           </p>
         )}
 
-        {error && (
-          <p className="message" role="alert">
-            {error}
-          </p>
+        {!loading && error && (
+          <ErrorState
+            title="Vi kunne ikke hente events"
+            message={error}
+            linkText="Prøv igen"
+            onAction={handleRetry}
+          />
         )}
 
-        {!loading && !error && filteredEvents.length === 0 && (
-          <p className="message">
-            Vi fandt ingen events, der matcher din søgning.
-          </p>
+        {!loading && !error && events.length === 0 && (
+          <EmptyState
+            title="Ingen kommende events"
+            message="Der er ingen kommende events lige nu. Prøv igen senere."
+          />
         )}
+
+        {!loading &&
+          !error &&
+          events.length > 0 &&
+          filteredEvents.length === 0 && (
+            <EmptyState
+              title="Ingen events fundet"
+              message="Vi fandt ingen events, der matcher din søgning eller kategori."
+            />
+          )}
 
         {!loading && !error && filteredEvents.length > 0 && (
           <section className={styles.eventGrid}>

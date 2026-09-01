@@ -1,16 +1,21 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import Footer from "../components/Footer";
+import ErrorState from "../components/ErrorState";
+import LoadingState from "../components/LoadingState";
 import { createRegistration, getEvent } from "../services/supabaseClient";
 import styles from "./EventPage.module.css";
 
 export default function EventPage() {
   const { eventId } = useParams();
+
   const [event, setEvent] = useState(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
   const [submitting, setSubmitting] = useState(false);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [registrationError, setRegistrationError] = useState("");
@@ -62,30 +67,30 @@ export default function EventPage() {
     }
   }
 
+  /* Loading state */
   if (loading) {
     return (
       <>
         <main className={styles.eventPage}>
-          <p className="message" role="status">
-            Henter event...
-          </p>
+          <LoadingState message="Henter event..." />
         </main>
+
         <Footer />
       </>
     );
   }
 
+  /* Error state */
   if (error) {
     return (
       <>
         <main className={styles.eventPage}>
-          <p className="message" role="alert">
-            {error}
-          </p>
-
-          <Link className={styles.backLink} to="/">
-            ← Alle events
-          </Link>
+          <ErrorState
+            title="Eventet kunne ikke hentes"
+            message={error}
+            linkText="← Alle events"
+            linkTo="/"
+          />
         </main>
 
         <Footer />
@@ -93,15 +98,21 @@ export default function EventPage() {
     );
   }
 
+  /* Empty state */
   if (!event) {
     return (
       <>
         <main className={styles.eventPage}>
-          <p className="message">Vi kunne ikke finde dette event.</p>
+          <div className={styles.emptyState}>
+            <div>
+              <strong>Vi kunne ikke finde dette event</strong>
+              <p>Eventet findes ikke længere eller kunne ikke findes.</p>
+            </div>
 
-          <Link className={styles.backLink} to="/">
-            ← Alle events
-          </Link>
+            <Link className={styles.errorBackLink} to="/">
+              ← Alle events
+            </Link>
+          </div>
         </main>
 
         <Footer />
@@ -127,25 +138,29 @@ export default function EventPage() {
 
             <h1>{event.title}</h1>
 
-            <p className="lead">{event.summary}</p>
+            <p className={styles.lead}>{event.summary}</p>
 
             <div className={styles.detailList}>
               <p>
                 <strong>Dato</strong>
-                {date.toLocaleDateString("da-DK", {
-                  weekday: "long",
-                  day: "numeric",
-                  month: "long",
-                })}{" "}
-                kl.{" "}
-                {date.toLocaleTimeString("da-DK", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
+
+                <span>
+                  {date.toLocaleDateString("da-DK", {
+                    weekday: "long",
+                    day: "numeric",
+                    month: "long",
+                  })}{" "}
+                  kl.{" "}
+                  {date.toLocaleTimeString("da-DK", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </span>
               </p>
 
               <p>
                 <strong>Sted</strong>
+
                 <span>
                   {venue?.name}
                   <br />
@@ -154,7 +169,7 @@ export default function EventPage() {
                     <>
                       <br />
                       <a href={venue.website} target="_blank" rel="noreferrer">
-                        Besøg venue
+                        Besøg venue →
                       </a>
                     </>
                   )}
@@ -163,16 +178,19 @@ export default function EventPage() {
 
               <p>
                 <strong>Pris</strong>
-                {event.price === 0 ? "Gratis" : `${event.price} kr.`}
+
+                <span>
+                  {event.price === 0 ? "Gratis" : `${event.price} kr.`}
+                </span>
               </p>
             </div>
 
-            <p>{event.description}</p>
+            <p className={styles.description}>{event.description}</p>
           </div>
         </section>
 
         <section className={styles.signupPanel}>
-          <div>
+          <div className={styles.signupIntro}>
             <p className="eyebrow dark">Tilmelding</p>
 
             <h2>Reserver din plads</h2>
@@ -182,43 +200,52 @@ export default function EventPage() {
             </p>
           </div>
 
-          {registrationSuccess && (
-            <p className="message" role="status">
-              Du er nu tilmeldt eventet.
-            </p>
-          )}
+          <div className={styles.signupFormArea}>
+            {/* Success */}
+            {registrationSuccess && (
+              <div className={styles.successMessage} role="status">
+                <strong>Tilmeldingen er gennemført</strong>
 
-          {registrationError && (
-            <p className="message" role="alert">
-              {registrationError}
-            </p>
-          )}
+                <p>Du er nu tilmeldt eventet.</p>
+              </div>
+            )}
 
-          <form onSubmit={handleSubmit}>
-            <label>
-              Navn
-              <input
-                value={name}
-                onChange={(inputEvent) => setName(inputEvent.target.value)}
-                required
-              />
-            </label>
+            {/* Error */}
+            {registrationError && (
+              <div className={styles.registrationError} role="alert">
+                <strong>Der opstod en fejl</strong>
 
-            <label>
-              E-mail
-              <input
-                type="email"
-                value={email}
-                onChange={(inputEvent) => setEmail(inputEvent.target.value)}
-                placeholder="dig@example.com"
-                required
-              />
-            </label>
+                <p>{registrationError}</p>
+              </div>
+            )}
 
-            <button type="submit" disabled={submitting}>
-              {submitting ? "Tilmelder..." : "Tilmeld mig"}
-            </button>
-          </form>
+            <form onSubmit={handleSubmit}>
+              <label>
+                Navn
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(inputEvent) => setName(inputEvent.target.value)}
+                  required
+                />
+              </label>
+
+              <label>
+                E-mail
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(inputEvent) => setEmail(inputEvent.target.value)}
+                  placeholder="dig@example.com"
+                  required
+                />
+              </label>
+
+              <button type="submit" disabled={submitting}>
+                {submitting ? "Tilmelder..." : "Tilmeld mig →"}
+              </button>
+            </form>
+          </div>
         </section>
       </main>
 

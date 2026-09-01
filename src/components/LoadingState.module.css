@@ -1,0 +1,43 @@
+.loadingState {
+  align-items: center;
+  background: #e8e3d8;
+  border-radius: 20px;
+  color: var(--green);
+  display: flex;
+  gap: 1rem;
+  padding: 2rem 2.5rem;
+}
+
+.loadingState strong {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 0.35rem;
+}
+
+.loadingState p {
+  color: #52605a;
+  margin: 0;
+}
+
+.loadingSpinner {
+  animation: spin 0.8s linear infinite;
+  border: 3px solid rgba(14, 61, 53, 0.2);
+  border-radius: 50%;
+  border-top-color: var(--green);
+  flex-shrink: 0;
+  height: 24px;
+  width: 24px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 600px) {
+  .loadingState {
+    align-items: flex-start;
+    padding: 1.5rem;
+  }
+}
