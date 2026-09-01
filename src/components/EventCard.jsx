@@ -1,9 +1,7 @@
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import styles from "./EventCard.module.css";
 
 export default function EventCard({ event }) {
-  const navigate = useNavigate();
-
   function formatEventDate(eventDate) {
     const date = new Date(eventDate);
     const formattedDate = date.toLocaleDateString("da-DK", {
@@ -16,16 +14,14 @@ export default function EventCard({ event }) {
   }
 
   return (
-    <article
-      className={styles.eventCard}
-      onClick={() => navigate(`/events/${event.id}`)}
-      style={{ cursor: "pointer" }}
-    >
+    <Link className={styles.eventCard} to={`/events/${event.id}`}>
       <img src={event.image} alt="" />
 
       <div className={styles.eventCardContent}>
         <p className={styles.eventCategory}>{event.category}</p>
+
         <h3>{event.title}</h3>
+
         <p>{event.summary}</p>
 
         <div className={styles.eventMeta}>
@@ -33,10 +29,8 @@ export default function EventCard({ event }) {
           <span>{event.venueName}</span>
         </div>
 
-        <Link className={styles.cardLink} to={`/events/${event.id}`}>
-          Læs mere
-        </Link>
+        <span className={styles.cardLink}>Læs mere</span>
       </div>
-    </article>
+    </Link>
   );
 }

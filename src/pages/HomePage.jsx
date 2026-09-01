@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import ErrorState from "../components/ErrorState";
 import EmptyState from "../components/EmptyState";
+import LoadingState from "../components/LoadingState";
 import EventCard from "../components/EventCard";
 import { getEvents } from "../services/supabaseClient";
 import styles from "./HomePage.module.css";
@@ -113,11 +114,7 @@ export default function HomePage() {
           </label>
         </section>
 
-        {loading && (
-          <p className="message" role="status">
-            Henter kommende events...
-          </p>
-        )}
+        {loading && <LoadingState />}
 
         {!loading && error && (
           <ErrorState
