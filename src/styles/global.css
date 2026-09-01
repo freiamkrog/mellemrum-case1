@@ -80,17 +80,3 @@ main {
   background: var(--cream);
   padding: 1rem;
 }
-
-.page-header {
-  background: var(--green);
-  color: white;
-  padding: 5rem var(--content-edge);
-}
-
-.page-header h1 {
-  font-size: clamp(3rem, 6vw, 6rem);
-  letter-spacing: normal;
-  line-height: 0.9;
-  margin: 0;
-  max-width: 12ch;
-}

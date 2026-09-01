@@ -26,7 +26,7 @@ export default function AboutPage() {
           </div>
 
           <div className={styles.aboutIntroCopy}>
-            <p className="lead">
+            <p className={styles.lead}>
               Mellemrum samler koncerter, talks, workshops og fællesskaber, så
               du lettere kan opdage noget, du ikke allerede kendte.
             </p>
