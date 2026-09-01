@@ -1,117 +1,323 @@
 .eventPage {
   max-width: 1280px;
+  margin: 0 auto;
+  padding: 4rem 2rem 6rem;
 }
+
+/* =========================
+   BACK LINK
+========================= */
 
 .backLink {
-  display: inline-block;
-  font-size: 0.9rem;
+  align-items: center;
+  background: var(--green);
+  border-radius: 999px;
+  color: white;
+  display: inline-flex;
+  font-size: 0.95rem;
+  font-weight: 800;
   margin-bottom: 2rem;
+  padding: 0.85rem 1.4rem;
+  text-decoration: none;
+  transition: transform 0.2s ease;
 }
 
-.eventCategory {
-  color: #a5412c;
-  font-size: 0.72rem;
-  font-weight: 850;
-  letter-spacing: normal;
-  margin: 0 0 0.7rem;
-  text-transform: uppercase;
+.backLink:hover {
+  transform: translateY(-2px);
 }
+
+/* =========================
+   LOADING / ERROR / EMPTY
+========================= */
+
+.loadingState,
+.errorState,
+.emptyState {
+  border-radius: 20px;
+  padding: 2rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.loadingState strong,
+.errorState strong,
+.emptyState strong {
+  display: block;
+  color: var(--green);
+  font-size: 1.1rem;
+  margin-bottom: 0.35rem;
+}
+
+.loadingState p,
+.errorState p,
+.emptyState p {
+  margin: 0;
+  color: #52605a;
+}
+
+/* Empty */
+
+.emptyState {
+  background: #eee9df;
+}
+
+.errorBackLink {
+  background: var(--green);
+  border-radius: 999px;
+  color: white;
+  flex-shrink: 0;
+  font-weight: 800;
+  padding: 0.85rem 1.4rem;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.errorBackLink:hover {
+  transform: translateY(-2px);
+}
+
+/* =========================
+   EVENT DETAIL
+========================= */
 
 .eventDetail {
   background: white;
-  border-radius: 18px;
+  border-radius: 24px;
   box-shadow: var(--shadow);
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-columns: 1.05fr 0.95fr;
   overflow: hidden;
 }
 
 .eventDetail > img {
+  width: 100%;
   height: 100%;
   min-height: 600px;
   object-fit: cover;
-  width: 100%;
 }
 
 .eventDetailContent {
   padding: clamp(2rem, 5vw, 5rem);
 }
 
+.eventCategory {
+  color: #a5412c;
+  font-size: 0.75rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  margin: 0 0 0.8rem;
+  text-transform: uppercase;
+}
+
 .eventDetail h1 {
+  color: var(--green);
   font-size: clamp(3rem, 5vw, 5.5rem);
-  letter-spacing: normal;
+  letter-spacing: -0.04em;
   line-height: 0.95;
   margin: 0 0 1.5rem;
 }
 
+.lead {
+  color: #52605a;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+/* =========================
+   EVENT INFORMATION
+========================= */
+
 .detailList {
   border-bottom: 1px solid var(--line);
   border-top: 1px solid var(--line);
-  margin: 2rem 0;
-  padding: 0.5rem 0;
+  margin: 2.5rem 0;
+  padding: 0.8rem 0;
 }
 
 .detailList p {
   display: grid;
   grid-template-columns: 5rem 1fr;
+  gap: 1rem;
+  margin: 0;
+  padding: 0.8rem 0;
 }
+
+.detailList strong {
+  color: var(--green);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.detailList span {
+  line-height: 1.5;
+}
+
+.detailList a {
+  color: var(--green);
+  display: inline-block;
+  font-weight: 700;
+  margin-top: 0.4rem;
+}
+
+.description {
+  color: #394740;
+  line-height: 1.75;
+}
+
+/* =========================
+   SIGNUP PANEL
+========================= */
 
 .signupPanel {
   background: var(--lime);
-  border-radius: 18px;
+  border-radius: 24px;
   display: grid;
-  gap: 4rem;
+  gap: 3rem;
   grid-template-columns: 1fr 1fr;
   margin-top: 2rem;
   padding: clamp(2rem, 5vw, 5rem);
 }
 
-.signupPanel h2 {
+.signupIntro h2 {
+  color: var(--green);
   font-size: clamp(2.2rem, 4vw, 4rem);
-  letter-spacing: normal;
+  letter-spacing: -0.04em;
   line-height: 1;
-  margin: 0;
+  margin: 0 0 1rem;
+}
+
+.signupIntro > p:last-child {
+  color: var(--green);
+  line-height: 1.6;
+  max-width: 430px;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.signupFormArea {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
 }
 
 .signupPanel form {
   display: grid;
-  gap: 0.65rem;
+  gap: 1rem;
 }
 
 .signupPanel label {
   display: grid;
-  font-size: 0.78rem;
-  font-weight: 800;
+  color: var(--green);
+  font-size: 0.75rem;
+  font-weight: 850;
   gap: 0.45rem;
-  letter-spacing: normal;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
-.signupPanel form > span {
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: normal;
-  margin-top: 0.3rem;
-  text-transform: uppercase;
+.signupPanel input {
+  background: white;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  box-sizing: border-box;
+  color: var(--green);
+  font: inherit;
+  min-height: 52px;
+  padding: 0.8rem 1rem;
+  width: 100%;
 }
 
-.signupPanel button {
+.signupPanel input:focus {
+  border-color: var(--green);
+  outline: none;
+}
+
+.signupPanel input::placeholder {
+  color: #8b938e;
+}
+
+.signupPanel button[type="submit"] {
   background: var(--green);
   border: 0;
+  border-radius: 999px;
   color: white;
   cursor: pointer;
+  font: inherit;
   font-weight: 800;
-  margin-top: 0.7rem;
-  min-height: 50px;
-  padding: 0.8rem 1.1rem;
+  margin-top: 0.5rem;
+  min-height: 52px;
+  padding: 0.8rem 1.4rem;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
-.signupPanel button:disabled {
-  cursor: wait;
-  opacity: 0.65;
+.signupPanel button[type="submit"]:hover:not(:disabled) {
+  transform: translateY(-2px);
 }
+
+.signupPanel button[type="submit"]:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+/* =========================
+   REGISTRATION STATES
+========================= */
+
+.successMessage,
+.registrationError {
+  border-radius: 14px;
+  margin: 0;
+  padding: 1rem 1.2rem;
+}
+
+.successMessage {
+  background: #dcefdc;
+  border-left: 5px solid #287a45;
+  color: #1d5b34;
+}
+
+.registrationError {
+  background: #f5d9d1;
+  border-left: 5px solid #a5412c;
+  color: #7d2f22;
+}
+
+.successMessage strong,
+.registrationError strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.successMessage p,
+.registrationError p {
+  margin: 0;
+}
+
+.successMessage p {
+  color: #2d6940;
+}
+
+.registrationError p {
+  color: #7d4036;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
 
 @media (max-width: 900px) {
+  .eventPage {
+    padding: 3rem 1.25rem 4rem;
+  }
+
   .eventDetail,
   .signupPanel {
     grid-template-columns: 1fr;
@@ -119,5 +325,32 @@
 
   .eventDetail > img {
     min-height: 380px;
+  }
+
+  .signupPanel {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .loadingState,
+  .errorState,
+  .emptyState {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+
+  .detailList p {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+  }
+
+  .eventDetailContent {
+    padding: 2rem 1.5rem;
+  }
+
+  .signupPanel {
+    padding: 2rem 1.5rem;
   }
 }

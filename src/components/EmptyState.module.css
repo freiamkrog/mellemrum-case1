@@ -1,0 +1,17 @@
+.emptyState {
+  background: #f1ede4;
+  border-radius: 20px;
+  padding: 2rem 2.5rem;
+}
+
+.emptyState strong {
+  color: var(--green);
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 0.35rem;
+}
+
+.emptyState p {
+  color: #56645f;
+  margin: 0;
+}
