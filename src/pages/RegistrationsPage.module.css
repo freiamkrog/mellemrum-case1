@@ -43,12 +43,24 @@
 }
 
 .registrationGroupHeader p {
-  color: var(--lime);
+  color: var(--white);
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: normal;
   margin: 0;
   text-transform: uppercase;
+}
+
+.goodAvailability {
+  color: var(--lime);
+}
+
+.fewSeats {
+  color: var(--yellow);
+}
+
+.soldOut {
+  color: var(--red);
 }
 
 .registrationRow {
@@ -93,11 +105,11 @@
 }
 
 .statusPending {
-  background: #f4df9b;
+  background: var(--pending);
 }
 
 .statusConfirmed {
-  background: #dff3cc;
+  background: var(--confirmed);
 }
 
 @media (max-width: 620px) {

@@ -61,14 +61,19 @@
   padding-top: 1rem;
 }
 
+.cardFooter {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
 .cardLink {
-  align-self: flex-start;
   background: var(--green);
   border-radius: 999px;
   color: white;
   font-size: 0.88rem;
   font-weight: 750;
-  margin-top: 1rem;
   padding: 0.7rem 1rem;
   text-decoration: none;
   transition: background 160ms ease, color 160ms ease;

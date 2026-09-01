@@ -13,6 +13,8 @@ export default function EventCard({ event }) {
     return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
   }
 
+  const registrationCount = event.registrations?.[0]?.count || 0;
+
   return (
     <Link className={styles.eventCard} to={`/events/${event.id}`}>
       <img src={event.image} alt="" />
@@ -26,10 +28,16 @@ export default function EventCard({ event }) {
 
         <div className={styles.eventMeta}>
           <span>{formatEventDate(event.date)}</span>
-          <span>{event.venueName}</span>
+          <span>{event.venues?.name}</span>
         </div>
 
-        <span className={styles.cardLink}>Læs mere</span>
+        <div className={styles.cardFooter}>
+          <span className={styles.cardLink}>Læs mere</span>
+
+          <span className={styles.eventAvailability}>
+            {registrationCount} / {event.capacity} tilmeldte
+          </span>
+        </div>
       </div>
     </Link>
   );

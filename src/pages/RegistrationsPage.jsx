@@ -78,55 +78,86 @@ export default function RegistrationsPage() {
           {!loading &&
             !error &&
             Object.entries(registrationsByEvent).map(
-              ([eventTitle, eventRegistrations]) => (
-                <section className={styles.registrationGroup} key={eventTitle}>
-                  <div className={styles.registrationGroupHeader}>
-                    <h2>{eventTitle}</h2>
-                    <p>{eventRegistrations.length} tilmeldinger</p>
-                  </div>
+              ([eventTitle, eventRegistrations]) => {
+                const capacity = eventRegistrations[0]?.events?.capacity || 0;
+                const eventRegistrationCount = eventRegistrations.length;
+                const remainingSeats = capacity - eventRegistrationCount;
 
-                  <div
-                    className={`${styles.registrationRow} ${styles.registrationLabels}`}
+                let availability = "God plads";
+
+                if (remainingSeats <= 0) {
+                  availability = "Udsolgt";
+                } else if (remainingSeats <= capacity / 4) {
+                  availability = "Få pladser";
+                }
+
+                return (
+                  <section
+                    className={styles.registrationGroup}
+                    key={eventTitle}
                   >
-                    <span>Navn</span>
-                    <span>E-mail</span>
-                    <span>Dato</span>
-                    <span>Status</span>
-                  </div>
+                    <div className={styles.registrationGroupHeader}>
+                      <h2>{eventTitle}</h2>
 
-                  {eventRegistrations.map((registration) => (
-                    <div
-                      className={styles.registrationRow}
-                      key={registration.id}
-                    >
-                      <div>
-                        <strong>{registration.name}</strong>
-                      </div>
-
-                      <span>{registration.email}</span>
-
-                      <span>
-                        {registration.events?.date
-                          ? new Date(
-                              registration.events.date,
-                            ).toLocaleDateString("da-DK")
-                          : "—"}
-                      </span>
-
-                      <span
-                        className={`${styles.status} ${
-                          registration.status === "Ny"
-                            ? styles.statusPending
-                            : styles.statusConfirmed
-                        }`}
-                      >
-                        {statusLabels[registration.status] ||
-                          registration.status}
-                      </span>
+                      <p>
+                        {eventRegistrationCount} / {capacity} tilmeldte ·{" "}
+                        <span
+                          className={
+                            availability === "Udsolgt"
+                              ? styles.soldOut
+                              : availability === "Få pladser"
+                                ? styles.fewSeats
+                                : styles.goodAvailability
+                          }
+                        >
+                          {availability}
+                        </span>
+                      </p>
                     </div>
-                  ))}
-                </section>
-              ),
+
+                    <div
+                      className={`${styles.registrationRow} ${styles.registrationLabels}`}
+                    >
+                      <span>Navn</span>
+                      <span>E-mail</span>
+                      <span>Dato</span>
+                      <span>Status</span>
+                    </div>
+
+                    {eventRegistrations.map((registration) => (
+                      <div
+                        className={styles.registrationRow}
+                        key={registration.id}
+                      >
+                        <div>
+                          <strong>{registration.name}</strong>
+                        </div>
+
+                        <span>{registration.email}</span>
+
+                        <span>
+                          {registration.events?.date
+                            ? new Date(
+                                registration.events.date,
+                              ).toLocaleDateString("da-DK")
+                            : "—"}
+                        </span>
+
+                        <span
+                          className={`${styles.status} ${
+                            registration.status === "Ny"
+                              ? styles.statusPending
+                              : styles.statusConfirmed
+                          }`}
+                        >
+                          {statusLabels[registration.status] ||
+                            registration.status}
+                        </span>
+                      </div>
+                    ))}
+                  </section>
+                );
+              },
             )}
         </div>
       </main>

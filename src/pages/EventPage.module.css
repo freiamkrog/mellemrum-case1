@@ -89,13 +89,45 @@
   margin-bottom: 0;
 }
 
+.availability {
+  border-bottom: 1px solid var(--line);
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+  min-height: 72px;
+  padding: 0;
+}
+
+.availability strong {
+  color: var(--green);
+  font-size: 0.82rem;
+}
+
+.availability span {
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.goodAvailability {
+  color: var(--status-green);
+}
+
+.fewSeats {
+  color: var(--yellow);
+}
+
+.soldOut {
+  color: var(--red);
+}
+
 /* =========================
    EVENT INFORMATION
 ========================= */
 
 .detailList {
   border-bottom: 1px solid var(--line);
-  border-top: 1px solid var(--line);
   margin: 2.5rem 0;
   padding: 0.8rem 0;
 }
