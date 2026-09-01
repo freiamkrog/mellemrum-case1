@@ -5,10 +5,12 @@ import styles from "./AboutPage.module.css";
 export default function AboutPage() {
   return (
     <>
-      <header className={`page-header ${styles.aboutHeader}`}>
+      <header className={styles.aboutHeader}>
         <div className={styles.aboutHeaderContent}>
           <p className="eyebrow">Om Mellemrum</p>
+
           <h1>Vi skaber mellemrum i kalenderen.</h1>
+
           <p>Udvalgte kulturoplevelser og nye perspektiver på Aarhus.</p>
         </div>
       </header>
@@ -20,6 +22,7 @@ export default function AboutPage() {
         >
           <div>
             <p className="eyebrow dark">Idéen</p>
+
             <h2 id="about-intro-title">
               En enkel vej til det, der sker tæt på.
             </h2>
@@ -44,6 +47,7 @@ export default function AboutPage() {
         >
           <div className={styles.aboutSectionHeading}>
             <p className="eyebrow">Målgrupper</p>
+
             <h2 id="about-audiences-title">
               Mellemrum forbinder oplevelser med mennesker.
             </h2>
@@ -52,21 +56,27 @@ export default function AboutPage() {
           <div className={styles.aboutAudienceSplit}>
             <article>
               <span>Primær målgruppe</span>
+
               <h3>For dig, der vil opdage byen</h3>
+
               <p>
                 Find lokale oplevelser, få det vigtigste overblik, og tilmeld
                 dig uden unødige omveje.
               </p>
+
               <a href="/#events">Udforsk kommende events →</a>
             </article>
 
             <article>
               <span>For arrangører</span>
+
               <h3>Gør oplevelsen synlig</h3>
+
               <p>
                 Del events med et nysgerrigt publikum, og få overblik over de
                 mennesker, der tilmelder sig.
               </p>
+
               <a href="mailto:hej@mellemrum.dk">Tal med os om et event →</a>
             </article>
           </div>
@@ -78,25 +88,32 @@ export default function AboutPage() {
         >
           <div className={styles.aboutSectionHeading}>
             <p className="eyebrow dark">Sådan hænger det sammen</p>
+
             <h2 id="about-flow-title">Fra idé til plads i kalenderen.</h2>
           </div>
 
           <ol className={styles.aboutFlowList}>
             <li>
               <span>01</span>
+
               <strong>Arrangører deler events</strong>
+
               <p>Oplevelsen får en tydelig plads på platformen.</p>
             </li>
 
             <li>
               <span>02</span>
+
               <strong>Brugere opdager</strong>
+
               <p>Søgning, kategorier og kuratering gør det lettere at vælge.</p>
             </li>
 
             <li>
               <span>03</span>
+
               <strong>Brugere tilmelder sig</strong>
+
               <p>Fra interesse til tilmelding i ét sammenhængende flow.</p>
             </li>
           </ol>
@@ -111,12 +128,15 @@ export default function AboutPage() {
               src="https://images.unsplash.com/photo-1532370778713-1400f3d62094?q=80&w=1600&auto=format&fit=crop&ixlib=rb-4.1.0"
               alt="Moderne arkitektur med lyse facader og turkise altaner"
             />
+
             <figcaption>Byrum, arkitektur og nye perspektiver.</figcaption>
           </figure>
 
           <div>
             <p className="eyebrow dark">Aarhus tæt på</p>
+
             <h2 id="about-city-title">Find plads til noget nyt.</h2>
+
             <p>
               Mellemrum peger på steder, idéer og fællesskaber på tværs af byen
               — fra små scener til store tanker.

@@ -8,9 +8,19 @@
     ),
     url("https://images.unsplash.com/photo-1553376482-e96b68bd1e11?q=80&w=2400&auto=format&fit=crop&ixlib=rb-4.1.0")
       center / cover;
+  color: white;
   min-height: 68vh;
+  padding: 5rem var(--content-edge);
   display: flex;
   align-items: flex-end;
+}
+
+.aboutHeader h1 {
+  font-size: clamp(3rem, 6vw, 6rem);
+  letter-spacing: normal;
+  line-height: 0.9;
+  margin: 0;
+  max-width: 12ch;
 }
 
 .aboutHeaderContent {
