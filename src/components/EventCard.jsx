@@ -17,7 +17,7 @@ export default function EventCard({ event }) {
 
   return (
     <Link className={styles.eventCard} to={`/events/${event.id}`}>
-      <img src={event.image} alt="" />
+      <img src={event.image} alt="" loading="lazy" />
 
       <div className={styles.eventCardContent}>
         <p className={styles.eventCategory}>{event.category}</p>
