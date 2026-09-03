@@ -4,10 +4,6 @@
   padding: 4rem 2rem 6rem;
 }
 
-/* =========================
-   BACK LINK
-========================= */
-
 .backLink {
   align-items: center;
   background: var(--green);
@@ -40,10 +36,6 @@
 .errorBackLink:hover {
   transform: translateY(-2px);
 }
-
-/* =========================
-   EVENT DETAIL
-========================= */
 
 .eventDetail {
   background: white;
@@ -111,20 +103,28 @@
 }
 
 .goodAvailability {
+  background: var(--confirmed);
+  border-radius: 999px;
   color: var(--status-green);
+  font-weight: 800;
+  padding: 0.35rem 0.7rem;
 }
 
 .fewSeats {
-  color: var(--yellow);
+  background: var(--pending);
+  border-radius: 999px;
+  color: var(--status-yellow);
+  font-weight: 800;
+  padding: 0.35rem 0.7rem;
 }
 
 .soldOut {
+  background: #f5d9d1;
+  border-radius: 999px;
   color: var(--red);
+  font-weight: 800;
+  padding: 0.35rem 0.7rem;
 }
-
-/* =========================
-   EVENT INFORMATION
-========================= */
 
 .detailList {
   border-bottom: 1px solid var(--line);
@@ -163,10 +163,6 @@
   line-height: 1.75;
 }
 
-/* =========================
-   SIGNUP PANEL
-========================= */
-
 .signupPanel {
   background: var(--lime);
   border-radius: 24px;
@@ -190,10 +186,6 @@
   line-height: 1.6;
   max-width: 430px;
 }
-
-/* =========================
-   FORM
-========================= */
 
 .signupFormArea {
   display: grid;
@@ -262,10 +254,6 @@
   opacity: 0.55;
 }
 
-/* =========================
-   REGISTRATION STATES
-========================= */
-
 .successMessage,
 .registrationError {
   border-radius: 14px;
@@ -303,10 +291,6 @@
 .registrationError p {
   color: #7d4036;
 }
-
-/* =========================
-   RESPONSIVE
-========================= */
 
 @media (max-width: 900px) {
   .eventPage {
