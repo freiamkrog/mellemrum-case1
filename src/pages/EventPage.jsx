@@ -19,6 +19,7 @@ export default function EventPage() {
   const [submitting, setSubmitting] = useState(false);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [registrationError, setRegistrationError] = useState("");
+  const [registrationFieldError, setRegistrationFieldError] = useState("");
 
   useEffect(() => {
     async function loadEvent() {
@@ -46,6 +47,7 @@ export default function EventPage() {
       setSubmitting(true);
       setRegistrationSuccess(false);
       setRegistrationError("");
+      setRegistrationFieldError("");
 
       const registration = {
         name,
@@ -69,8 +71,13 @@ export default function EventPage() {
       setName("");
       setEmail("");
     } catch (error) {
-      console.error(error);
-      setRegistrationError(error.message);
+  console.error(error);
+  setRegistrationError(error.message);
+
+  if (error.message === "Denne mail er allerede tilmeldt dette event.") {
+    setRegistrationFieldError("email");
+  }
+
     } finally {
       setSubmitting(false);
     }
@@ -255,7 +262,11 @@ export default function EventPage() {
                 )}
 
                 {registrationError && (
-                  <div className={styles.registrationError} role="alert">
+                  <div
+                    id="email-error"
+                    className={styles.registrationError}
+                    role="alert"
+                  >
                     <strong>Der opstod en fejl</strong>
 
                     <p>{registrationError}</p>
@@ -280,11 +291,21 @@ export default function EventPage() {
                     <input
                       type="email"
                       value={email}
-                      onChange={(inputEvent) =>
-                        setEmail(inputEvent.target.value)
-                      }
+                      onChange={(inputEvent) => {
+                        setEmail(inputEvent.target.value);
+
+                        if (registrationFieldError === "email") {
+                          setRegistrationFieldError("");
+                        }
+                      }}
                       placeholder="dig@example.com"
                       required
+                      aria-invalid={registrationFieldError === "email"}
+                      aria-describedby={
+                        registrationFieldError === "email"
+                          ? "email-error"
+                          : undefined
+                      }
                     />
                   </label>
 
