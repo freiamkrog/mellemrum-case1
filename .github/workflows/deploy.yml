@@ -47,6 +47,13 @@ jobs:
         env:
           VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
           VITE_SUPABASE_APIKEY: ${{ vars.VITE_SUPABASE_APIKEY }}
+          
+      - name: Create route pages
+        run: |
+          mkdir -p dist/om
+          mkdir -p dist/tilmeldinger
+          cp dist/index.html dist/om/index.html
+          cp dist/index.html dist/tilmeldinger/index.html
 
       # Copy index.html to 404.html for SPA routing
       # This ensures React Router works on GitHub Pages
