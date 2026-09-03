@@ -28,6 +28,16 @@ a {
   color: inherit;
 }
 
+a:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
 button,
 input,
 select {
@@ -45,10 +55,9 @@ select {
   transition: border-color 160ms ease, box-shadow 160ms ease;
 }
 
-input:focus,
-select:focus {
-  border-color: var(--green);
-  box-shadow: 0 0 0 3px rgba(23, 63, 53, 0.12);
+input:focus-visible,
+select:focus-visible {
+  border-color: var(--focus);
   outline: none;
 }
 
