@@ -60,7 +60,7 @@
 }
 
 .soldOut {
-  color: var(--red);
+  color: var(--status-red);
 }
 
 .registrationRow {
