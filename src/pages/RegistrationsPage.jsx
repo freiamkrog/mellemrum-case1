@@ -33,13 +33,13 @@ export default function RegistrationsPage() {
   }, []);
 
   const registrationsByEvent = registrations.reduce((groups, registration) => {
-    const eventTitle = registration.events?.title || "Ukendt event";
+    const eventId = registration.events?.id || "unknown";
 
-    if (!groups[eventTitle]) {
-      groups[eventTitle] = [];
+    if (!groups[eventId]) {
+      groups[eventId] = [];
     }
 
-    groups[eventTitle].push(registration);
+    groups[eventId].push(registration);
 
     return groups;
   }, {});
@@ -78,7 +78,7 @@ export default function RegistrationsPage() {
           {!loading &&
             !error &&
             Object.entries(registrationsByEvent).map(
-              ([eventTitle, eventRegistrations]) => {
+              ([eventId, eventRegistrations]) => {
                 const capacity = eventRegistrations[0]?.events?.capacity || 0;
                 const eventRegistrationCount = eventRegistrations.length;
                 const remainingSeats = capacity - eventRegistrationCount;
@@ -92,12 +92,11 @@ export default function RegistrationsPage() {
                 }
 
                 return (
-                  <section
-                    className={styles.registrationGroup}
-                    key={eventTitle}
-                  >
+                  <section className={styles.registrationGroup} key={eventId}>
                     <div className={styles.registrationGroupHeader}>
-                      <h2>{eventTitle}</h2>
+                      <h2>
+                        {eventRegistrations[0]?.events?.title || "Ukendt event"}
+                      </h2>
 
                       <p>
                         {eventRegistrationCount} / {capacity} tilmeldte ·{" "}
