@@ -41,7 +41,7 @@ export async function getEvent(eventId) {
 
 export async function getRegistrations() {
   const response = await fetch(
-    `${SUPABASE_URL}/registrations?select=*,events(*,registrations(count))&order=createdAt.desc`,
+    `${SUPABASE_URL}/registrations?select=id,name,email,status,createdAt,events(id,title,date,capacity)&order=createdAt.desc`,
     {
       headers,
     },
